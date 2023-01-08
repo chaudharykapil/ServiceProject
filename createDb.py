@@ -1,12 +1,21 @@
-
+from flask import Flask,render_template,request,session,abort
 from flask_sqlalchemy import SQLAlchemy
-maindb = SQLAlchemy()
+
+app = Flask(__name__)
+app.config["SECRET_KEY"] = "dfssdafasbsjcsdflhnvvbhflssdfhjsffrdees"
+app.config["SQLALCHEMY_DATABASE_URI"] = "mysql+pymysql://root:kapil@localhost/service_provider_website"
+#app.config["SQLALCHEMY_DATABASE_URI"] = "mysql+pymysql://root:@localhost:3306/service_provider_website"
+
+app.app_context().push()
+
+
+maindb = SQLAlchemy(app=app)
 class ServiceProvider(maindb.Model):
     __tablename__ = "serviceprovider"
     sno = maindb.Column(maindb.Integer,primary_key = True)
     name = maindb.Column(maindb.String(50),nullable=False)
     email = maindb.Column(maindb.String(50),nullable = False)
-    password = maindb.Column(maindb.String(8),nullable = False)
+    password = maindb.Column(maindb.String(50),nullable = False)
     profession = maindb.Column(maindb.String(50),nullable = False)
     category = maindb.Column(maindb.String(50),nullable = False)
     city = maindb.Column(maindb.String(30),nullable = True)
@@ -18,7 +27,7 @@ class ServiceProvider(maindb.Model):
     address = maindb.Column(maindb.String(100),nullable = True)
     open_close_time = maindb.Column(maindb.DateTime,nullable = True)
     experience = maindb.Column(maindb.Float,nullable=True)
-    profile_pic=maindb.Column(maindb.String(50),nullable = True)
+    profile_pic=maindb.Column(maindb.String(200),nullable = True)
 
 class Ratings(maindb.Model):
     __tablename__ = "rating"
@@ -43,8 +52,8 @@ class User(maindb.Model):
     city = maindb.Column(maindb.String(30),nullable = True)
     state=maindb.Column(maindb.String(30),nullable = True)
     phone = maindb.Column(maindb.String(13),nullable = True) 
-    password=maindb.Column(maindb.String(16),nullable = False)
-    profile_pic=maindb.Column(maindb.String(50),nullable = True)
+    password=maindb.Column(maindb.String(50),nullable = False)
+    profile_pic=maindb.Column(maindb.String(200),nullable = True)
 
 class Admin(maindb.Model):
     __tablename__ = "admin"
@@ -52,7 +61,7 @@ class Admin(maindb.Model):
     name = maindb.Column(maindb.String(50),nullable=False)
     username=maindb.Column(maindb.String(50),nullable=False)
     email = maindb.Column(maindb.String(50),nullable = False)
-    password = maindb.Column(maindb.String(10),nullable = False)
+    password = maindb.Column(maindb.String(50),nullable = False)
 
 class Appointment(maindb.Model):
     __tabelname__="appointment"

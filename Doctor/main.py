@@ -19,6 +19,7 @@ def drsignup():
         email=request.form.get("email")
         pass1=request.form.get("pass1")
         pass2=request.form.get("pass2")
+        print(request.form)
         if pass1==pass2:
             servpr=ServiceProvider(
                 name=name,
@@ -54,7 +55,8 @@ def login():
 @app.route("/dashboard/<string:id>",methods=["GET",'POST'])
 def dashboard(id):
     doctor = ServiceProvider.query.filter_by(sno = id).first()
-    if doctor and doctor.profession.casefold() == "doctor":
+    print("Doctor ", doctor)
+    if(doctor):
         return render_template('dashboard.html',doctor = doctor)
     return abort(404)
 
@@ -91,3 +93,7 @@ def servicelist():
     doctors = ServiceProvider.query.all()
     return render_template("serviceproviderlist.html",doctors = doctors,user = user)
 
+
+@app.route("/setting")
+def SettingPage():
+    return "Setting"

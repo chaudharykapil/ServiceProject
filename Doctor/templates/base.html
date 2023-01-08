@@ -38,6 +38,16 @@
 
 <body>
 
+  {% with messages = get_flashed_messages() %}
+  {% if messages %}
+    
+    {% for message in messages %}
+      <script>alert(`{{message}}`)</script>
+    {% endfor %}
+    
+  {% endif %}
+  {% endwith %}
+
   <!-- ======= Top Bar ======= -->
   <div id="topbar" class="d-none d-lg-flex align-items-end fixed-top topbar-transparent">
     <div class="container d-flex justify-content-end">
@@ -59,8 +69,8 @@
 
       <nav class="main-nav d-none d-lg-block">
         <ul>
-          <li class="active"><a href="#home">Home</a></li>
-          <li><a href="#about">About Us</a></li>
+          <li class="active"><a href="/">Home</a></li>
+          <li><a href="/about">About Us</a></li>
           <li><a href="/list">Services</a></li>
           <li><a href="#team">Team</a></li>
           <li><a href="#footer">Contact Us</a></li>
@@ -76,8 +86,8 @@
           <li class="drop-down"><a href="/">{{user.name}}</a>
             <ul>
               <li><a href="/profile/{{user.email}}">Profile</a></li>
-              <li><a href="#">Dashboard</a></li>
-              <li><a href="#">Setting</a></li>
+              <li><a href="/doctor/dashboard/{{user.id}}">Dashboard</a></li>
+              <li><a href="/doctor/setting">Setting</a></li>
               <li><a href="/logout">Logout</a></li>
             </ul>
           </li>

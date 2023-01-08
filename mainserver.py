@@ -1,17 +1,17 @@
 from flask import Flask,render_template,request,session,abort
 from flask.helpers import flash
 from werkzeug.utils import redirect, secure_filename
-import random
-import json
+
 from Database.databases import ServiceProvider,User,maindb as db 
 from Doctor.main import db as doctor_db,app as doctor_app 
 app = Flask(__name__)
 app.config["SECRET_KEY"] = "dfssdafasbsjcsdflhnvvbhflssdfhjsffrdees"
-#app.config["SQLALCHEMY_DATABASE_URI"] = "mysql+pymysql://root:kapil@localhost/service_provider_website"
-app.config["SQLALCHEMY_DATABASE_URI"] = "mysql+pymysql://root:@localhost:3306/service_provider_website"
+app.config["SQLALCHEMY_DATABASE_URI"] = "mysql+pymysql://root:kapil@localhost/service_provider_website"
+#app.config["SQLALCHEMY_DATABASE_URI"] = "mysql+pymysql://root:@localhost:3306/service_provider_website"
 db.__init__(app)
 app.register_blueprint(doctor_app,url_prefix="/doctor")
 doctor_db.__init__(app)
+app.app_context().push()
 @app.route("/")
 def home():
     
